@@ -1,0 +1,119 @@
+<!-- public/signup.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            background-color: #f8f8ff;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M17.1 14.5A9 9 0 0 1 1.63 9.04M23 13A15 15 0 0 1 5.33 6.45"/></svg>') no-repeat center;
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image\BrewMap__1_-removebg-preview.png" alt="Brewery Web App Logo">
+        </div>
+        <h1>Brewery Web App</h1>
+        <h1></h1>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <h2>Sign Up</h2>
+            <form method="post" action="/signup" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" class="form-control" placeholder="Choose a username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <div style="position: relative;">
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Enter a password" required>
+                        <div class="eye-icon" onclick="togglePasswordVisibility()"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    
+
+                    <div style="position: relative;">
+                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm your password" required>
+                     <div class="eye-icon" onclick="togglePasswordVisibility1()"></div>
+                    </div>
+                    <p id="passwordMismatch" style="color: red; display: none;">Passwords do not match</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+
+            <p>Already have an account? <a href="login.html">Log in here</a>.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Brewery Web App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function validateForm() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm_password').value;
+            var passwordMismatch = document.getElementById('passwordMismatch');
+
+            if (password !== confirmPassword) {
+                passwordMismatch.style.display = 'block';
+                return false;
+            } else {
+                passwordMismatch.style.display = 'none';
+                return true;
+            }
+        }
+
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById('password');
+    
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        }
+        function togglePasswordVisibility1() {
+            var passwordField = document.getElementById('confirm_password');
+    
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        }
+    </script>
+</body>
+</html>
+
+

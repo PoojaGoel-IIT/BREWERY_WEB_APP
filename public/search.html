@@ -1,0 +1,139 @@
+<!-- public/home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            background-color: #f8f8ff;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image\BrewMap__1_-removebg-preview.png" alt="Brewery Web App Logo">
+        </div>
+        <h1>Brewery Web App</h1>
+        <h1></h1>
+    </header>
+
+    <main>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Enter city, name, or type">
+            <button onclick="searchBreweries()">Search</button>
+        </div>
+
+        <div class="result-container" id="resultContainer"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Brewery Web App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let selectedBrewery;
+        function searchBreweries() {
+            const searchInput = document.getElementById('searchInput').value;
+           
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = ''; // Clear previous results
+
+            // Use the Open Brewery DB API to search breweries
+            // Replace with your actual API key
+
+            const apiUrl_city = `https://api.openbrewerydb.org/breweries?by_city=${searchInput}`;
+            const apiUrl_name = `https://api.openbrewerydb.org/breweries?by_name=${searchInput}`;
+            const apiUrl_type = `https://api.openbrewerydb.org/breweries?by_type=${searchInput}`;
+
+            // Use Promise.all to fetch data from all three APIs concurrently
+            Promise.all([
+                fetch(apiUrl_city).then(response => response.json()),
+                fetch(apiUrl_name).then(response => response.json()),
+                fetch(apiUrl_type).then(response => response.json())
+            ])
+                .then(results => {
+                    // results is an array containing the responses from all three APIs
+                    console.log('API Response (City):', results[0]);
+                    console.log('API Response (Name):', results[1]);
+                    console.log('API Response (Type):', results[2]);
+                    var combinedData;
+                    // Check for type error
+                    if ( results[2].errors) {
+                        combinedData = [...results[0], ...results[1]]; 
+                    }
+                    else{
+                     combinedData = [...results[0], ...results[1], ...results[2]];
+                    }
+                    
+                    // Combine the data from all three APIs into a single array
+                   
+
+                    
+
+                    // Process the combined data and display details for each brewery
+                    if (Array.isArray(combinedData)) {
+                        combinedData.forEach(brewery => {
+                            selectedBrewery = brewery; 
+                            const breweryCard = document.createElement('div');
+                            breweryCard.classList.add('brewery-card');
+                            
+                            const details = `
+    <h3>
+        <a href="javascript:void(0);" onclick="storeBrewery()">${brewery.name} </a> 
+    </h3>
+    <p>Address: ${brewery.street}, ${brewery.city}, ${brewery.state}</p>
+    <p>Phone: ${brewery.phone}</p>
+    <p>Website: <a href="${brewery.website_url}" target="_blank">${brewery.website_url}</a></p>
+    <p>Rating: ${calculateRating(brewery.rating)}</p>
+    <p>State, City: ${brewery.state}, ${brewery.city}</p>
+    <p>id:${brewery.id}</p>
+`;
+
+
+                            breweryCard.innerHTML = details;
+                            resultContainer.appendChild(breweryCard);
+                        });
+                       
+                    } else {
+                        console.error('Combined data is not an array:', combinedData);
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function calculateRating(rating) {
+            // You can implement your own rating calculation logic here
+            return rating || 'N/A';
+        }
+        
+        function storeBrewery() {
+            console.log(selectedBrewery);
+            // Clear the entire localStorage
+            localStorage.clear();
+
+            localStorage["information"] = JSON.stringify(selectedBrewery);
+             console.log(localStorage)
+        
+            // Delay the navigation by 500 milliseconds (adjust as needed)
+            setTimeout(() => {
+                window.location.href = "brewery_info.html";
+        }, 500000); 
+        }
+        
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brewery Info</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            background-color: #f8f8ff;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        #breweryDetails {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        #reviewsContainer {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .review-card {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image\BrewMap__1_-removebg-preview.png" alt="Brewery Web App Logo">
+        </div>
+        <h1>Brewery Web App</h1>
+        <h1></h1>
+    </header>
+
+    <main>
+        <div id="breweryDetails"></div>
+
+        <div id="reviewsContainer"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Brewery Web App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Fetch brewery details and reviews when the page loads
+       // Add this function to get URL parameters by name
+document.addEventListener('DOMContentLoaded', function () {
+    console.log(localStorage)
+    if (localStorage["information"]) {
+        const brewery = JSON.parse(localStorage["information"]);
+        console.log(brewery);
+
+        // ... rest of your code
+    } else {
+        console.error('localStorage["information"] is not defined or null.');
+    }
+
+console.log("poo");
+
+
+// Fetch brewery details and reviews when the page loads
+
+        // Handle the data and update the UI with brewery details and reviews
+        const detailsContainer = document.getElementById('breweryDetails');
+        const reviewsContainer = document.getElementById('reviewsContainer');
+
+        // Display brewery details
+        const details = `
+            <h2>${brewery.name}</h2>
+            <p>Address: ${brewery.street}, ${brewery.city}, ${brewery.state}</p>
+            <p>Phone: ${brewery.phone}</p>
+            <p>Website: <a href="${brewery.website_url}" target="_blank">${brewery.website_url}</a></p>
+            <p>Rating: ${calculateRating(brewery.rating)}</p>
+            <p>State, City: ${brewery.state}, ${brewery.city}</p>
+        `;
+        detailsContainer.innerHTML = details;
+
+        // Display reviews
+        if (Array.isArray(data.reviews)) {
+            data.reviews.forEach(review => {
+                const reviewCard = document.createElement('div');
+                reviewCard.classList.add('review-card');
+                reviewCard.innerHTML = `
+                    <p>Rating: ${review.rating}</p>
+                    <p>Description: ${review.description}</p>
+                `;
+                reviewsContainer.appendChild(reviewCard);
+            });
+        }
+    })
+    
+
+function calculateRating(rating) {
+    // You can implement your own rating calculation logic here
+    return rating || 'N/A';
+}
+
+        
+    </script>
+</body>
+</html>

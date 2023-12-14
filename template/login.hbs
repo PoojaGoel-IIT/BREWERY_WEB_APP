@@ -1,0 +1,57 @@
+<!-- public/login.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body{
+            background-color:#f8f8ff;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image\BrewMap__1_-removebg-preview.png" alt="Brewery Web App Logo">
+        </div>
+        <h1 >Brewery Web App</h1>
+        <h1></h1>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <h2>Login</h2>
+            <form method="post" action="/login">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                </div> 
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+
+            <p>Don't have an account? <a href="signup.html">Sign up here</a>.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Brewery Web App. All rights reserved.</p>
+    </footer>
+</body>
+</html>
